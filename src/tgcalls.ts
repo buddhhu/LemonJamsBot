@@ -26,7 +26,7 @@ interface CachedConnection {
 const ws = new WebSocket(env.WEBSOCKET_URL);
 const cache = new Map<number, CachedConnection>();
 
-const ffmpegOptions = ['-c', 'copy', '-acodec', 'pcm_s16le', '-f', 's16le', '-ac', '1', '-ar', '65000', 'pipe:1'];
+const ffmpegOptions = ['-preset', 'ultrafast', '-c', 'copy', '-acodec', 'pcm_s16le', '-f', 's16le', '-ac', '1', '-ar', '65000', 'pipe:1'];
 
 ws.on('message', response => {
     const { _, data } = JSON.parse(response.toString());
@@ -49,7 +49,7 @@ ws.on('message', response => {
 const downloadSong = async (url: string): Promise<DownloadedSong> => {
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
-        const ytdl = spawn('youtube-dl', ['--extract-audio', '--print-json', '--get-url', url.replace(/'/g, `'"'"'`)]);
+        const ytdl = spawn('youtube-dl', ['-x', '--audio-format mp3', '--audio-quality 0', '--print-json', '--get-url', url.replace(/'/g, `'"'"'`)]);
 
         ytdl.stderr.on('data', data => console.error(data.toString()));
 
