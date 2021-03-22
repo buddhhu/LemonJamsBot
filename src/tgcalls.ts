@@ -49,7 +49,7 @@ ws.on('message', response => {
 const downloadSong = async (url: string): Promise<DownloadedSong> => {
     return new Promise((resolve, reject) => {
         const ytdlChunks: string[] = [];
-        const ytdl = spawn('youtube-dl', ['-x', '--audio-quality 0', '--print-json', '--get-url', url.replace(/'/g, `'"'"'`)]);
+        const ytdl = spawn('youtube-dl', ['-x', '--print-json', '--get-url', url.replace(/'/g, `'"'"'`)]);
 
         ytdl.stderr.on('data', data => console.error(data.toString()));
 
