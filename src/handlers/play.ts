@@ -27,7 +27,7 @@ export const playHandler = Composer.command('play', async ctx => {
             break;
 
         case 0:
-            message = 'Playing.';
+            message = `Playing\n${text}`;
             break;
 
         default:
